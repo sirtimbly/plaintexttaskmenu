@@ -19,7 +19,7 @@ var _htmlLocation = "task-schedule.html";
 
 var menubar = require('menubar')
 
-var mb = menubar({width: 550});
+var mb = menubar({width: 550, icon: "IconTemplate.png"});
 
 mb.on('ready', function ready () {
   if (program.verbose > 0) console.log('app is ready');
@@ -57,6 +57,7 @@ var _fileSpanEnd = '</sub></sup>';
 var _taskListFileName = 'task-schedule.md';
 var _taskListHtmlFileName = 'task-schedule.html';
 var _taskListCSSFileName = 'task-schedule.css';
+var _activeIcon = false;
 
 var _htmlHeader = '<html><head><link rel="stylesheet" href="'+ _taskListCSSFileName +'"></head><body>';
 
@@ -149,10 +150,13 @@ function getFileManifest(files) {
 }
 
 function regenerateFromGlobalManifest() {
+    readTargetDir(_target);
+    _manifest = getFileManifest(_files);
 	writeTaskFiles(generateMarkdownFromTasks(getAllTasksInFiles(_manifest)));
 }
 
 function getAllTasksInFiles(manifest) {
+    _activeIcon = false;
 	var taskList = [];
 	for (var i = manifest.length - 1; i >= 0; i--) {
 		taskList = taskList.concat(
@@ -181,6 +185,7 @@ function parseTasksFromFileContents(fileText, fileName, filePath) {
 			}
 			if (moment(taskItem.dateTime).isSame(moment(), 'day')) {
 				taskItem.isDueNow = true;
+                
 			}
 			var parseDone = /@done/;
 			if (taskItem.isComplete === true || parseDone.exec(taskItem.fullText)) {
@@ -197,12 +202,20 @@ function parseTasksFromFileContents(fileText, fileName, filePath) {
 
 function writeTaskFiles(markdownText) {
 	//var buffer = generateMarkdown(taskList);
+    
 	fs.writeFileSync(_target+_taskListFileName, markdownText);
 	
 	var html = _htmlHeader
 	html += marked(markdownText);
 	html +=_htmlFooter;
 	fs.writeFileSync(_target+_taskListHtmlFileName, html);
+    
+    if (_activeIcon) {
+        mb.tray.setImage("IconTemplateActive.png");
+    } else {
+        mb.tray.setImage("IconTemplate.png");
+    }
+    
 }
 
 function generateMarkdownFromTasks(taskList) {
@@ -223,9 +236,11 @@ function generateMarkdownFromTasks(taskList) {
 		}
 		if (item.isDueNow) {
 			isB = _iToken;
+            _activeIcon = true;
 		} 
 		if (item.isPastDue) {
 			isB = _bToken;
+            _activeIcon = true;
 		}
 		
 		buffer+="\n|"+isB+item.dateTime+isB+"\t|"+item.taskName.trim()+"\t|" + "["+item.fileName+"](file://"+ item.fullPath +")";
