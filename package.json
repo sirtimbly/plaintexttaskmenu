@@ -1,0 +1,32 @@
+{
+  "name": "taskpaper-schedule-table",
+  "version": "0.1.0",
+  "description": "A program that examines taskpaper files in a folder and creates a markdown table of the due dates in order",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "commander": "^2.3.0",
+    "dashing-client": ">=0.0.1",
+    "electron-prebuilt": "^0.36.1",
+    "js-yaml": "^3.2.2",
+    "lodash": "^2.4.1",
+    "marked": "^0.3.5",
+    "menubar": "^3.0.0",
+    "minimist": "1.1.0",
+    "moment": "^2.10.6",
+    "walk": "*"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sirtimbly/manuscript-logger.git"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "task-scheduler": "index.js"
+  }
+}

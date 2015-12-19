@@ -1,0 +1,10 @@
+{
+	"version": "0.1.0",
+	"command": "electron",
+	"isShellCommand": true,
+	"args": [
+		"index.js",
+		"/Users/tbendt/Dropbox/_Tim/Projects/",
+		"--debug=5858"
+	]
+}
