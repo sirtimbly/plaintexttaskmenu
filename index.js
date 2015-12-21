@@ -30,7 +30,11 @@ mb.on('ready', function ready () {
 mb.on('after-show', function(){
 	if (program.verbose > 0) console.log("loading: "+_target+_htmlLocation);
 	mb.window.loadURL("file://"+_target+_htmlLocation);
+    mb.window.webContents.executeJavaScript("document.getElementsByName('body').insertAdjacentElement('beforeend', '<a href=\"#quit\" class=\"btn\">Quit</a>');");
 	mb.window.webContents.on('will-navigate', function(event, url) {
+        if (url === "#quit") {
+            mb.app.quit();
+        }
 		if (program.verbose > 0) console.log("window loading new page " + url);
 		if (url !== "file://"+_target+_htmlLocation) {
 			event.preventDefault();
@@ -94,16 +98,17 @@ if (program.args.length === 1) {
 function readTargetDir(target) {
 	var _files = []
 	if (program.verbose > 0) console.log('target:' + target);
+    var count = 0
 	// Walker options
 	var walker  = walk.walk(target, { followLinks: false });
-	var count = 0
 	walker.on('file', function(root, stat, next) {
 	    if (!stat.isDirectory()) {
 			if (program.verbose > 0) process.stdout.write("Scanned " + count + " files...\r");
 	    	var extension = stat.name.split('.')[1];
 	    	program.ext = program.ext || ['taskpaper'];
+            var archiveRE = /archive/;
 	    	for (var i = program.ext.length - 1; i >= 0; i--) {
-	    		if (extension === program.ext[i]){
+	    		if (extension === program.ext[i] && archiveRE.exec(stat.name) == null){
 		    		// Add this file to the list of files
 					var filePath = root + "/" + stat.name
 					if (program.verbose > 0) console.log("found: " + filePath);
