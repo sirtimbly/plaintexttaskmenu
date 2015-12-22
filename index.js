@@ -100,8 +100,8 @@ function readTargetDir(target) {
 	if (program.verbose > 0) console.log('target:' + target);
     var count = 0
 	// Walker options
-	var walker  = walk.walk(target, { followLinks: false });
-	walker.on('file', function(root, stat, next) {
+	var walker  = walk.walk(target, { followLinks: false, filters: ["node_modules", ".git"] });
+	walker.on('file', function(root, stat, next) {  
 	    if (!stat.isDirectory()) {
 			if (program.verbose > 0) process.stdout.write("Scanned " + count + " files...\r");
 	    	var extension = stat.name.split('.')[1];
