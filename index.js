@@ -114,7 +114,7 @@ function readTargetDir(target) {
 					if (program.verbose > 0) console.log("found: " + filePath);
 			    	_files.push(root + "/" + stat.name);
                     if (!watchers[filePath]) {
-                        watchers.push(filePath);
+                        watchers[filePath] = true;
 					    fs.watchFile(filePath, regenerateFromGlobalManifest);
                     }
                     
