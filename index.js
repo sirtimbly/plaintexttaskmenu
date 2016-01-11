@@ -67,7 +67,7 @@ var _htmlHeader = '<html><head><link rel="stylesheet" href="'+ _taskListCSSFileN
 
 //var argv = require('minimist')(process.argv.slice(2));
 var program = require('commander');
-
+var watchers = [];
 
 
 
@@ -113,7 +113,11 @@ function readTargetDir(target) {
 					var filePath = root + "/" + stat.name
 					if (program.verbose > 0) console.log("found: " + filePath);
 			    	_files.push(root + "/" + stat.name);
-					fs.watchFile(filePath, regenerateFromGlobalManifest);
+                    if (!watchers[filePath]) {
+                        watchers.push(filePath);
+					    fs.watchFile(filePath, regenerateFromGlobalManifest);
+                    }
+                    
 			    }
 			}
 			count++;
