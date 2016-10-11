@@ -3,24 +3,24 @@
 	// List of configurations. Add new configurations or edit existing ones.  
 	// ONLY "node" and "mono" are supported, change "type" to switch.
 	"configurations": [
-		// {
-		// 	// Name of configuration; appears in the launch configuration drop down menu.
-		// 	"name": "Launch Electron index",
-		// 	// Type of configuration. Possible values: "node", "mono".
-		// 	"type": "node",
-		// 	// Workspace relative or absolute path to the program.
-		// 	"program": "index.js",
-		// 	// Automatically stop program after launch.
-		// 	"stopOnEntry": false,
-		// 	"args": ["/Users/tbendt/Dropbox/_Tim/Projects/"],
-		// 	// Command line arguments passed to the program.
-		// 	// Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
-		// 	"cwd": ".",
-		// 	// Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
-		// 	// Environment variables passed to the program.
-		// 	"env": { }
+		{
+			// Name of configuration; appears in the launch configuration drop down menu.
+			"name": "Launch  slackToText",
+			// Type of configuration. Possible values: "node", "mono".
+			"type": "node",
+			// Workspace relative or absolute path to the program.
+			"program": "${workspaceRoot}/slackToText.js",
+			// Automatically stop program after launch.
+			"stopOnEntry": false,
+			"args": ["/Users/tbendt/Downloads/export2/", "-v=1"],
+			// Command line arguments passed to the program.
+			// Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
+			"cwd": "${workspaceRoot}/.",
+			// Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
+			// Environment variables passed to the program.
+			"env": { }
 			
-		// }, 
+		}, 
 		{
 			"name": "Attach",
 			"type": "node",

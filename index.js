@@ -14,7 +14,7 @@ var marked = require('marked');
 var exec = require('child_process').exec;
 
 var _editor = 'subl ';
-var _htmlLocation = "task-schedule.html";
+var _htmlLocation = "/task-schedule.html";
 
 
 var menubar = require('menubar')
@@ -58,8 +58,8 @@ var _bToken = '**';
 var _iToken = '__';
 var _fileSpan = '<sup><sub>';
 var _fileSpanEnd = '</sub></sup>';
-var _taskListFileName = 'task-schedule.md';
-var _taskListHtmlFileName = 'task-schedule.html';
+var _taskListFileName = '/task-schedule.md';
+var _taskListHtmlFileName = '/task-schedule.html';
 var _taskListCSSFileName = 'task-schedule.css';
 var _activeIcon = false;
 
@@ -220,9 +220,9 @@ function writeTaskFiles(markdownText) {
 	fs.writeFileSync(_target+_taskListHtmlFileName, html);
     
     if (_activeIcon) {
-        mb.tray.setImage("IconTemplateActive.png");
+        mb.tray.setImage(__dirname + "/IconTemplateActive.png");
     } else {
-        mb.tray.setImage("IconTemplate.png");
+        mb.tray.setImage(__dirname + "/IconTemplate.png");
     }
     
 }
