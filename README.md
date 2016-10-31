@@ -9,14 +9,16 @@ The HTML file will be displayed in the menubar.
 
 Styling is accomplished by putting task-schedule.css in the same directory as you scanned.
 
-to install, clone this directory 
+to install, clone this repository and `cd` into the new directory.
 
-to start it first install electron
+To start the app, first install electron
 
-`npm install electron-prebuilt -g`
+`npm install electron -g`
 
-from this directory run it with this command
+From this directory run it with this command
 
 `electron index.js ~/Dropbox/directory/with/taskpaper/files/`
 
 You can change the options inside index.js 
+
+If you want a way to start it automatically and keep it running you can try [Marathono](http://www.marathono.com/).
