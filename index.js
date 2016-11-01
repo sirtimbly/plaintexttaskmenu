@@ -186,7 +186,8 @@ function parseTasksFromFileContents(fileText, fileName, filePath) {
 				fullText: match[0],
 				taskName: match[1],
 				dueTag: match[2],
-				dateTime: match[3]
+				dateTime: match[3],
+				lineNumber: fileText.substring(0,match.index).split('\n').length
 			};
 			var parseDone = /@done/;
 			if (taskItem.isComplete === true || parseDone.exec(taskItem.fullText)) {
@@ -255,8 +256,11 @@ function generateMarkdownFromTasks(taskList) {
 			isB = _bToken;
             _activeIcon = true;
 		}
-		
-		buffer+="\n|"+isB+item.dateTime+isB+"\t|"+item.taskName.trim()+"\t|" + "["+item.fileName+"](file://"+ item.fullPath +")";
+		if (item.lineNumber) {
+			item.fullPath = item.fullPath + ":" + item.lineNumber;
+		}
+
+		buffer+="\n|"+isB+item.dateTime+isB+"\t|"+item.taskName.trim()+"\t|" + "["+item.fileName+"](file://"+ item.fullPath + ")";
 		
 	});
 	
