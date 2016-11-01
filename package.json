@@ -1,8 +1,9 @@
 {
-  "name": "taskpaper-schedule-table",
-  "version": "0.1.0",
+  "name": "plaintexttaskmenu",
+  "version": "0.2.0",
   "description": "A program that examines taskpaper files in a folder and creates a markdown table of the due dates in order",
   "main": "index.js",
+  "author": "Tim Bendt <sirtimbly@gmail.com>",
   "dependencies": {
     "commander": "^2.3.0",
     "js-yaml": "^3.2.2",
@@ -21,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sirtimbly/manuscript-logger.git"
+    "url": "https://github.com/sirtimbly/plaintexttaskmenu"
   },
   "preferGlobal": true,
   "bin": {
