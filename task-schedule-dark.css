@@ -1,8 +1,8 @@
 body {
   font-family: 'InputMono ExLight', Monaco, Menlo, 'Courier New', monospace;
   font-size: 12px;
-  background-color: #fdf6e3;
-  color: #586e75;
+  background-color: #002b36;
+  color: #93a1a1;
 }
 
 th {
@@ -14,9 +14,10 @@ th {
 }
 
 td {
-  background-color: none;
   border: 0;
-  border-top: 2px solid #eee8d5;
+  
+  background-color: none;
+  border-top:1px solid #586e75;
   padding: 4px 8px;
 }
 

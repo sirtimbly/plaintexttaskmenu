@@ -1,0 +1,24 @@
+body {
+	font-family: 'San Francisco', helvetica, Sans-serif;
+	font-size:12px;
+}
+
+td {
+	padding: 4px 8px;
+	border-top:1px solid #ddd;
+	background-color:#f1f1f1;
+}
+
+td:first-child {
+	min-width:100px;
+}
+
+td:last-child {
+	width:100px;
+	font-size:10px;
+}
+
+
+strong {
+	color: red;
+}
