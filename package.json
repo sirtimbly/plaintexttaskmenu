@@ -1,6 +1,6 @@
 {
   "name": "plaintexttaskmenu",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A program that examines taskpaper files in a folder and creates a markdown table of the due dates in order",
   "main": "index.js",
   "author": "Tim Bendt <sirtimbly@gmail.com>",
