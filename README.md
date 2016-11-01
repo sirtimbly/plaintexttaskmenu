@@ -1,8 +1,8 @@
 # Plain Text Task Menu App
 
-This is a Plain Text Productivity App for displaying all tasks (with due dates) in any .taskpaper files under a specified directory. 
+This is a Plain Text Productivity App for displaying all tasks (with due dates) in _any_ .taskpaper files under a specified directory. 
 
-![Screenshot](http://media.digitallyhandy.com/Screen%20Shot%202016-10-31%20at%2020.24.58.png)
+![Screenshot](http://media.digitallyhandy.com/Screen%20Shot%202016-10-31%20at%2020.54.45.png)
 
 I manage my list using the SublimeText Plugin [PlainTasks](https://github.com/aziz/PlainTasks)
 
@@ -16,7 +16,7 @@ It will scan a directoy for any .taskpaper files, then generate 2 files in that 
 
 My main use, and the reason I made this is to display that HTML file in a little menubar drop-down window.
 
-Styling is accomplished by copying `task-schedule.css` into the same directory as you output the html file (which is the same directory that was scanned and is being watched). You can edit this stylesheet to suit your tastes. Clicking on the link in the menubar will open the file in your system default app.
+Styling is accomplished by copying `task-schedule.css` into the same directory as you output the html file (which is the same directory that was scanned and is being watched). You can edit this stylesheet to suit your tastes. Clicking on the link in the menubar will open the file in SublimeText. This can be customized in index.js by changing the `_editor` variable.
 
 ## Install
 
@@ -26,10 +26,14 @@ To start the app, first install electron
 
 `npm install electron -g`
 
-From this directory run it with this command
+Then get the rest of the npm dependencies:
+
+`npm install`
+
+From this directory run the application with this command, the one and only argument specifies which directory to scan.
 
 `electron index.js ~/Dropbox/directory/with/taskpaper/files/`
 
-You can change the options inside index.js 
+You can change many options inside index.js 
 
 If you want a way to start it automatically and keep it running you can try [Marathono](http://www.marathono.com/).

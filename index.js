@@ -10,14 +10,37 @@ var moment 	= require('moment');
 var metaContent = require('./lib/content');
 //var DashingClient = require('dashing-client');
 var marked = require('marked');
+var program = require('commander');
 
 var exec = require('child_process').exec;
 
 var _editor = 'subl ';
 var _htmlLocation = "/task-schedule.html";
 
-
 var menubar = require('menubar')
+
+
+
+var _files   = [];
+var _manifest = [];
+var _tasks = [];
+var _target	= '/Users/tbendt/Dropbox/_Tim/Projects/';
+
+var _htmlFooter = '</body></html>';
+var _bToken = '**';
+var _iToken = '_';
+var _fileSpan = '<sup><sub>';
+var _fileSpanEnd = '</sub></sup>';
+var _taskListFileName = '/task-schedule.md';
+var _taskListHtmlFileName = '/task-schedule.html';
+var _taskListCSSFileName = 'task-schedule.css';
+var _activeIcon = false;
+
+var _htmlHeader = '<html><head><link rel="stylesheet" href="'+ _taskListCSSFileName +'"></head><body>';
+
+//var argv = require('minimist')(process.argv.slice(2));
+
+var watchers = [];
 
 var mb = menubar({width: 550, icon: "IconTemplate.png"});
 
@@ -47,28 +70,6 @@ mb.on('after-show', function(){
 		
 	});
 });
-
-var _files   = [];
-var _manifest = [];
-var _tasks = [];
-var _target	= '/Users/tbendt/Dropbox/_Tim/Projects/';
-
-var _htmlFooter = '</body></html>';
-var _bToken = '**';
-var _iToken = '__';
-var _fileSpan = '<sup><sub>';
-var _fileSpanEnd = '</sub></sup>';
-var _taskListFileName = '/task-schedule.md';
-var _taskListHtmlFileName = '/task-schedule.html';
-var _taskListCSSFileName = 'task-schedule.css';
-var _activeIcon = false;
-
-var _htmlHeader = '<html><head><link rel="stylesheet" href="'+ _taskListCSSFileName +'"></head><body>';
-
-//var argv = require('minimist')(process.argv.slice(2));
-var program = require('commander');
-var watchers = [];
-
 
 
 function increaseVerbosity(v, total) {
@@ -187,19 +188,22 @@ function parseTasksFromFileContents(fileText, fileName, filePath) {
 				dueTag: match[2],
 				dateTime: match[3]
 			};
-			
-			//var tomorrow = moment().add(24, 'hours');
-			if (moment(taskItem.dateTime).isBefore(moment())) {
-				taskItem.isPastDue = true;
-			}
-			if (moment(taskItem.dateTime).isSame(moment(), 'day')) {
-				taskItem.isDueNow = true;
-                
-			}
 			var parseDone = /@done/;
 			if (taskItem.isComplete === true || parseDone.exec(taskItem.fullText)) {
 				taskItem.isComplete = true;
+			} else {
+				var taskDate = moment(taskItem.dateTime);
+				var today = moment();
+				if (taskDate.isBefore(today, 'day')) {
+					taskItem.isPastDue = true;
+				}
+				if (taskDate.isSame(today, 'day')) {
+					taskItem.isDueNow = true;
+				}
 			}
+			//var tomorrow = moment().add(24, 'hours');
+			
+			
             taskItem.fileName = fileName;
             taskItem.fullPath = filePath;
 			taskList.push(taskItem);
@@ -240,7 +244,7 @@ function generateMarkdownFromTasks(taskList) {
 	
 	_.forEach(taskList, function(item){
 		var isB = '';
-		if (item.isComplete && item.isPastDue) {
+		if (item.isComplete) {
 			return; //don't write this old complete task
 		}
 		if (item.isDueNow) {
