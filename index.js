@@ -19,6 +19,8 @@ var _htmlLocation = "/task-schedule.html";
 
 var menubar = require('menubar')
 
+var {app, globalShortcut} = require('electron')
+
 
 
 var _files   = [];
@@ -41,16 +43,28 @@ var _htmlHeader = '<html><head><link rel="stylesheet" href="'+ _taskListCSSFileN
 //var argv = require('minimist')(process.argv.slice(2));
 
 var watchers = [];
-
+var isShowing = false;
 var mb = menubar({width: 550, icon: "IconTemplate.png"});
 
 mb.on('ready', function ready () {
   if (program.verbose > 0) console.log('app is ready');
-  // your app code here
-  
+
+  var ret = globalShortcut.register('Control+Shift+D', function() {
+    if (program.verbose > 0) console.log('Control+Shift+D is pressed');
+    if (isShowing) {
+    	mb.hideWindow();
+    } else {
+    	mb.showWindow();
+    }
+  })
+
+  if (!ret) {
+    if (program.verbose > 0) console.log('registration of global shortcut failed');
+  }
 })
 
 mb.on('after-show', function(){
+	isShowing = true;
 	if (program.verbose > 0) console.log("loading: "+_target+_htmlLocation);
 	mb.window.loadURL("file://"+_target+_htmlLocation);
     mb.window.webContents.executeJavaScript("document.getElementsByName('body').insertAdjacentElement('beforeend', '<a href=\"#quit\" class=\"btn\">Quit</a>');");
@@ -69,6 +83,10 @@ mb.on('after-show', function(){
 		}
 		
 	});
+});
+
+mb.on('after-hide', function(){
+	isShowing = false;
 });
 
 
