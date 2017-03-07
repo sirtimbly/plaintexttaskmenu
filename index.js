@@ -48,8 +48,8 @@ var mb = menubar({width: 550, icon: "IconTemplate.png"});
 
 mb.on('ready', function ready () {
   if (program.verbose > 0) console.log('app is ready');
-  // your app code here
-  var ret = globalShortcut.register('Control+Shift+D', () => {
+
+  var ret = globalShortcut.register('Control+Shift+D', function() {
     if (program.verbose > 0) console.log('Control+Shift+D is pressed');
     if (isShowing) {
     	mb.hideWindow();
