@@ -9,9 +9,10 @@
     "js-yaml": "^3.2.2",
     "lodash": "^2.4.1",
     "marked": "^0.3.5",
-    "menubar": "*",
+    "menubar": "^9.0.1",
     "moment": "^2.10.6",
-    "walk": "*"
+    "walk": "^2.3.14",
+    "electron": "~9.0.0"
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",

@@ -3,6 +3,18 @@
 	// List of configurations. Add new configurations or edit existing ones.  
 	// ONLY "node" and "mono" are supported, change "type" to switch.
 	"configurations": [
+		{
+			"name": "Electron Main",
+			"program": "${workspaceFolder}/index.js",
+			"args": ["--verbose", "C:/Users/sirti/Dropbox/_Tim/Projects/_tasks"],
+			"request": "launch",
+			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "pwa-node",
+			"outputCapture": "std"
+		},
 		// {
 		// 	// Name of configuration; appears in the launch configuration drop down menu.
 		// 	"name": "Launch Electron index",
@@ -21,26 +33,6 @@
 		// 	"env": { }
 			
 		// }, 
-		{
-			"name": "Attach",
-			"type": "node",
-			"request": "attach",
-			// TCP/IP address. Default is "localhost".
-			"address": "localhost",
-			// Port to attach to.
-			"port": 5858
-		},
-		{
-			"name": "Debug",
-			"type": "chrome",
-			"request": "launch",
-			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-			"runtimeArgs": [
-				"${workspaceRoot}",
-				"--enable-logging",
-				"--remote-debugging-port=9222"
-			],
-			"sourceMaps": false
-		}
+	
 	]
 }

@@ -14,10 +14,10 @@ var program = require('commander');
 
 var exec = require('child_process').exec;
 
-var _editor = 'subl ';
+var _editor = 'code -r -g ';
 var _htmlLocation = "/task-schedule.html";
 
-var menubar = require('menubar')
+const { menubar } = require('menubar')
 
 var {app, globalShortcut} = require('electron')
 
@@ -26,7 +26,7 @@ var {app, globalShortcut} = require('electron')
 var _files   = [];
 var _manifest = [];
 var _tasks = [];
-var _target	= '/Users/tbendt/Dropbox/_Tim/Projects/';
+var _target	= 'C:/Users/sirti/Dropbox/_Tim/Projects/';
 
 var _htmlFooter = '</body></html>';
 var _bToken = '**';
@@ -35,7 +35,7 @@ var _fileSpan = '<sup><sub>';
 var _fileSpanEnd = '</sub></sup>';
 var _taskListFileName = '/task-schedule.md';
 var _taskListHtmlFileName = '/task-schedule.html';
-var _taskListCSSFileName = 'task-schedule.css';
+var _taskListCSSFileName = 'task-schedule-dark.css';
 var _activeIcon = false;
 
 var _htmlHeader = '<html><head><link rel="stylesheet" href="'+ _taskListCSSFileName +'"></head><body>';
@@ -44,6 +44,9 @@ var _htmlHeader = '<html><head><link rel="stylesheet" href="'+ _taskListCSSFileN
 
 var watchers = [];
 var isShowing = false;
+
+console.log('Starting Menubar Tasks Menu')
+
 var mb = menubar({width: 550, icon: "IconTemplate.png"});
 
 mb.on('ready', function ready () {
@@ -67,7 +70,7 @@ mb.on('after-show', function(){
 	isShowing = true;
 	if (program.verbose > 0) console.log("loading: "+_target+_htmlLocation);
 	mb.window.loadURL("file://"+_target+_htmlLocation);
-    mb.window.webContents.executeJavaScript("document.getElementsByName('body').insertAdjacentElement('beforeend', '<a href=\"#quit\" class=\"btn\">Quit</a>');");
+    // mb.window.webContents.executeJavaScript("document.getElementsByName('body').insertAdjacentElement('beforeend', '<a href=\"#quit\" class=\"btn\">Quit</a>');");
 	mb.window.webContents.on('will-navigate', function(event, url) {
         if (url === "#quit") {
             mb.app.quit();
@@ -75,6 +78,9 @@ mb.on('after-show', function(){
 		if (program.verbose > 0) console.log("window loading new page " + url);
 		if (url !== "file://"+_target+_htmlLocation) {
 			event.preventDefault();
+			if (url.substr(0, 8) === "file:///") {
+				url = url.substr(8);
+			}
 			if (url.substr(0,7) === "file://") {
 				url = url.substr(7);
 			}
@@ -111,7 +117,8 @@ if (program.args.length === 1) {
 	_target = program.args[0];
 	readTargetDir(_target);
 } else {
-	console.log("ERROR: give me the directory you want to look in.")
+	console.error("ERROR: give me the directory you want to look in.")
+	process.exit(1)
 };
 
 function readTargetDir(target) {
@@ -251,6 +258,10 @@ function writeTaskFiles(markdownText) {
 }
 
 function generateMarkdownFromTasks(taskList) {
+	if (program.verbose > 0) console.log("generate markdown for tasks ", taskList);
+	if (!taskList || taskList.length === 0 || _.every(taskList, (value) => value.isComplete)) {
+		return '### No Tasks Due \n \n> Scanned on ' + getDate()
+	}
 	var headers = ["Due Date", "Task", "File"];
 	var buffer = '';
 	var divider = '';
